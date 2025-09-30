@@ -1,0 +1,18 @@
+creative-automation-poc/
+│
+├── briefs/
+│   └── shampoo_campaign.json
+│
+├── assets/
+│   ├── shampoo_base.png
+│   └── conditioner_base.png
+│
+├── output/
+│   └── shampoo/
+│       ├── 1x1/
+│       ├── 9x16/
+│       └── 16x9/
+│
+├── pipeline.py
+├── requirements.txt
+└── README.md
