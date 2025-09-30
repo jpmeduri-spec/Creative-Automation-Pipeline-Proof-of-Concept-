@@ -1,0 +1,17 @@
+{
+  "campaign_name": "Summer Shine Launch",
+  "products": [
+    {
+      "name": "Shampoo",
+      "target_region": "APAC",
+      "target_audience": "Young Adults",
+      "campaign_message": "Shine Bright This Summer with Our New Shampoo!"
+    },
+    {
+      "name": "Conditioner",
+      "target_region": "LATAM",
+      "target_audience": "Families",
+      "campaign_message": "Strong & Smooth Hair for the Whole Family."
+    }
+  ]
+}
