@@ -1,0 +1,48 @@
+import os
+import json
+from PIL import Image, ImageDraw, ImageFont
+
+# Mocked GenAI function (replace with API call)
+def generate_image(product_name, message):
+    img = Image.new("RGB", (1024, 1024), color=(200, 200, 255))
+    d = ImageDraw.Draw(img)
+    d.text((50, 400), f"{product_name}\n{message}", fill=(0, 0, 0))
+    return img
+
+def create_campaign(brief_path, assets_dir, output_dir):
+    with open(brief_path, "r") as f:
+        brief = json.load(f)
+    
+    for product in brief["products"]:
+        pname = product["name"].lower()
+        msg = product["campaign_message"]
+        
+        # Check for existing asset
+        asset_path = os.path.join(assets_dir, f"{pname}_base.png")
+        if os.path.exists(asset_path):
+            base_img = Image.open(asset_path)
+        else:
+            base_img = generate_image(product["name"], msg)
+
+        # Aspect ratios
+        ratios = {
+            "1x1": (1080, 1080),
+            "9x16": (1080, 1920),
+            "16x9": (1920, 1080)
+        }
+        
+        for ratio_name, size in ratios.items():
+            out_folder = os.path.join(output_dir, pname, ratio_name)
+            os.makedirs(out_folder, exist_ok=True)
+            
+            img_resized = base_img.resize(size)
+            draw = ImageDraw.Draw(img_resized)
+            font = ImageFont.load_default()
+            draw.text((50, size[1] - 100), msg, fill="black", font=font)
+            
+            out_path = os.path.join(out_folder, f"{pname}_{ratio_name}.png")
+            img_resized.save(out_path)
+            print(f"Saved: {out_path}")
+
+if __name__ == "__main__":
+    create_campaign("briefs/shampoo_campaign.json", "assets", "output")
